@@ -8,22 +8,22 @@ namespace gw2f {
 namespace bxml2 {
 
 XmlDocument::XmlDocument()
-    : m_root(new XmlElement("Root"))
-    , m_encoding("utf-8")
-    , m_version("1.0")
+    : m_root(new XmlElement(L"Root"))
+    , m_encoding(L"utf-8")
+    , m_version(L"1.0")
 {
 }
 
-XmlDocument::XmlDocument(const std::string& p_rootName)
+XmlDocument::XmlDocument(const std::wstring& p_rootName)
     : m_root(new XmlElement(p_rootName))
-    , m_encoding("utf-8")
-    , m_version("1.0")
+    , m_encoding(L"utf-8")
+    , m_version(L"1.0")
 {
     m_root->m_document = this;
 }
 
 XmlDocument::XmlDocument(const XmlDocument& p_other)
-    : m_root(new XmlElement("Root"))
+    : m_root(new XmlElement(L"Root"))
     , m_encoding(p_other.m_encoding)
     , m_version(p_other.m_version)
 {
@@ -52,22 +52,22 @@ const XmlElement& XmlDocument::root() const
 }
 
 
-const std::string& XmlDocument::encoding() const
+const std::wstring& XmlDocument::encoding() const
 {
     return m_encoding;
 }
 
-const std::string& XmlDocument::version() const
+const std::wstring& XmlDocument::version() const
 {
     return m_version;
 }
 
-void XmlDocument::setEncoding(const std::string& p_encoding)
+void XmlDocument::setEncoding(const std::wstring& p_encoding)
 {
     m_encoding = p_encoding;
 }
 
-void XmlDocument::setVersion(const std::string& p_version)
+void XmlDocument::setVersion(const std::wstring& p_version)
 {
     m_version = p_version;
 }

@@ -18,19 +18,20 @@
 
 #include <gw2formats/bxml2/Bxml2Reader.h>
 #include <gw2formats/bxml2/XmlDocument.h>
+#include <gw2formats/bxml2/XmlWriter.h>
 
 #include <iostream>
 
 void outputElement(const gw2f::bxml2::XmlElement& p_element, gw2f::uint32 depth = 0)
 {
-    std::cout << std::string(2 * depth, ' ') << p_element.name() << std::endl;
+    std::wcout << std::wstring(2 * depth, ' ') << p_element.name() << std::endl;
 
     for (auto element = p_element.firstChild(); element; element = element->nextSibling()) {
         outputElement(*element, depth + 1);
     }
 }
 
-int main(int argc, char** argv)
+int wmain(int argc, wchar_t** argv)
 {
     if (argc <= 1) {
         std::cout << "Usage: " << argv[0] << " <bxml2 file>" << std::endl;
@@ -42,7 +43,9 @@ int main(int argc, char** argv)
     gw2f::bxml2::Bxml2Reader reader(argv[1]);
     gw2f::bxml2::XmlDocument doc;
     reader.populateXmlDocument(doc);
-    outputElement(doc.root());
+    //outputElement(doc.root());
+	gw2f::bxml2::XmlWriter writer;
+	writer.write(doc, std::wstring(argv[1]) + L".xml");
 
     return 0;
 }

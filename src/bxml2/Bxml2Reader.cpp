@@ -17,7 +17,7 @@ Bxml2Reader::Bxml2Reader()
 {
 }
 
-Bxml2Reader::Bxml2Reader(const std::string& p_filename)
+Bxml2Reader::Bxml2Reader(const std::wstring& p_filename)
 {
     load(p_filename);
 }
@@ -42,7 +42,7 @@ Bxml2Reader& Bxml2Reader::operator=(const Bxml2Reader& p_other)
     return *this;
 }
 
-bool Bxml2Reader::load(const std::string& p_filename)
+bool Bxml2Reader::load(const std::wstring& p_filename)
 {
     m_data.reset(new std::vector<byte>);
 
@@ -90,7 +90,7 @@ void Bxml2Reader::populateXmlDocument(XmlDocument& p_document) const
     std::list<XmlElement*> elements;
     root.clear();
 
-    char buffer[16];
+    wchar_t buffer[32];
     while (pos < strings) {
         auto b = *pos++;
 
@@ -122,7 +122,7 @@ void Bxml2Reader::populateXmlDocument(XmlDocument& p_document) const
             element->setValue(readString(pos, strings));
         }
 
-        element->setAttribute("__numChildren", ::_itoa(numChildren, buffer, 10));
+        element->setAttribute(L"__numChildren", ::_itow(numChildren, buffer, 10));
 
         for (uint32 i = 0; i < numAttributes; i++) {
             auto key   = readString(pos, strings);
@@ -136,12 +136,12 @@ void Bxml2Reader::populateXmlDocument(XmlDocument& p_document) const
     transformDocument(elements);
 }
 
-std::string Bxml2Reader::readString(const byte*& position, const byte* strings) const
+std::wstring Bxml2Reader::readString(const byte*& position, const byte* strings) const
 {
     auto offset = *reinterpret_cast<const uint32*>(position);
-    auto string = strings + (offset >> 1);
+	auto string = strings + offset; // (offset >> 1);
     position   += sizeof(uint32);
-    return std::string(reinterpret_cast<const char*>(string));
+    return std::wstring(reinterpret_cast<const wchar_t*>(string));
 }
 
 void Bxml2Reader::transformDocument(const std::list<XmlElement*>& p_elements) const
@@ -153,8 +153,8 @@ void Bxml2Reader::transformDocument(const std::list<XmlElement*>& p_elements) co
         auto element = *parent;
 
         // number of children this element is supposed to have
-        auto attribute   = element->attribute("__numChildren");
-        auto numChildren = ::atol(attribute->value().c_str());
+        auto attribute   = element->attribute(L"__numChildren");
+        auto numChildren = ::_wtol(attribute->value().c_str());
         element->removeAttribute(attribute);
         delete attribute;
 

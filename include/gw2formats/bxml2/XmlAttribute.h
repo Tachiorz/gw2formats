@@ -36,16 +36,16 @@ class XmlAttribute
 {
     friend class XmlElement;
     XmlElement* m_parent;
-    std::string m_name;
-    std::string m_value;
+    std::wstring m_name;
+    std::wstring m_value;
 public:
     /** Constructors. Creates an attribute with the given name.
      *  \param[in]  p_name  Name of the attribute. */
-    XmlAttribute(const std::string& p_name);
+    XmlAttribute(const std::wstring& p_name);
     /** Constructors. Creates an attribute with the given name and value.
      *  \param[in]  p_name  Name of the attribute. 
      *  \param[in]  p_value Value of the attribute. */
-    XmlAttribute(const std::string& p_name, const std::string& p_value);
+    XmlAttribute(const std::wstring& p_name, const std::wstring& p_value);
     /** Copy constructor. */
     XmlAttribute(const XmlAttribute& p_other);
     /** Destructor. */
@@ -64,13 +64,13 @@ public:
     const XmlElement* parent() const;
 
     /** Gets the name of this attribute. */
-    const std::string& name() const;
+    const std::wstring& name() const;
     /** Gets the value of this attribute. */
-    const std::string& value() const;
+    const std::wstring& value() const;
     /** Sets the name of this attribute. */
-    void setName(const std::string& p_name);
+    void setName(const std::wstring& p_name);
     /** Sets the value of this attribute. */
-    void setValue(const std::string& p_value);
+    void setValue(const std::wstring& p_value);
 };
 
 }; // namespace bxml2

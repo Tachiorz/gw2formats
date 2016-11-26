@@ -37,8 +37,8 @@ namespace bxml2 {
 class XmlDocument
 {
     std::unique_ptr<XmlElement> m_root;
-    std::string m_encoding;
-    std::string m_version;
+    std::wstring m_encoding;
+    std::wstring m_version;
 public:
     /** Default constructor. Constructs this document with a root element named
      *  'Root'. */
@@ -46,7 +46,7 @@ public:
     /** Constructor. Constructs this document with a root element with the
      *  given name.
      *  \param[in]  p_rootName  Name of the root element. */
-    XmlDocument(const std::string& p_rootName);
+    XmlDocument(const std::wstring& p_rootName);
     /** Copy constructor. */
     XmlDocument(const XmlDocument& p_other);
     /** Destructor. */
@@ -61,13 +61,13 @@ public:
     const XmlElement& root() const;
 
     /** Gets the encoding. */
-    const std::string& encoding() const;
+    const std::wstring& encoding() const;
     /** Gets the XML version. */
-    const std::string& version() const;
+    const std::wstring& version() const;
     /** Sets the encoding. */
-    void setEncoding(const std::string& p_encoding);
+    void setEncoding(const std::wstring& p_encoding);
     /** Sets the XML version. */
-    void setVersion(const std::string& p_version);
+    void setVersion(const std::wstring& p_version);
 };
 
 }; // namespace bxml2

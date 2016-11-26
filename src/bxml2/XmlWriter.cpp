@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <fstream>
 #include <sstream>
+#include <codecvt>
 
 namespace gw2f {
 namespace bxml2 {
@@ -12,10 +13,10 @@ namespace bxml2 {
 namespace
 {
 
-bool outputElement(const XmlElement& p_element, std::ostream& p_stream, uint32_t p_depth)
+bool outputElement(const XmlElement& p_element, std::wostream& p_stream, uint32_t p_depth)
 {
     // start the starting tag
-    std::string indent(p_depth, '\t');
+    std::wstring indent(p_depth, '\t');
     p_stream << indent << "<" << p_element.name();
 
     // attributes
@@ -29,7 +30,10 @@ bool outputElement(const XmlElement& p_element, std::ostream& p_stream, uint32_t
     }
 
     // close the starting tag
-    if (!p_element.childCount()) { p_stream << "/"; }
+    if (!p_element.childCount())
+    {
+	    p_stream << ">" << p_element.value() << "<" << "/" << p_element.name();
+    }
     p_stream << ">" << std::endl;
 
     // output children
@@ -41,6 +45,8 @@ bool outputElement(const XmlElement& p_element, std::ostream& p_stream, uint32_t
 
     // output end tag
     if (p_element.childCount()) {
+		//output value
+		if (p_element.value() != L"") p_stream << p_element.value();
         p_stream << indent << "</" << p_element.name() << ">" << std::endl;
     }
 
@@ -57,16 +63,17 @@ XmlWriter::~XmlWriter()
 {
 }
 
-bool XmlWriter::write(const XmlDocument& p_document, std::ostream& p_stream)
+bool XmlWriter::write(const XmlDocument& p_document, std::wostream& p_stream)
 {
     p_stream << "<?xml version=\"" << p_document.version() << "\" encoding=\"" << p_document.encoding() << "\"?>" << std::endl;
     return outputElement(p_document.root(), p_stream, 0);
 }
 
-bool XmlWriter::write(const XmlDocument& p_document, const std::string& p_filename)
+bool XmlWriter::write(const XmlDocument& p_document, const std::wstring& p_filename)
 {
-    std::ofstream output(p_filename);
+    std::wofstream output(p_filename, std::ios::out | std::ios::binary);
     if (!output.is_open()) { return false; }
+	output.imbue(std::locale(output.getloc(), new std::codecvt_utf8_utf16<wchar_t>));
     auto retval = write(p_document, output);
     output.close();
     return retval;
@@ -74,12 +81,12 @@ bool XmlWriter::write(const XmlDocument& p_document, const std::string& p_filena
 
 uint32_t XmlWriter::write(const XmlDocument& p_document, byte* p_buffer, uint32_t p_maxSize)
 {
-    std::stringstream stream;
+    std::wstringstream stream;
     write(p_document, stream);
 
     auto size = std::min(static_cast<uint32_t>(stream.tellg()), p_maxSize);
     stream.seekg(0, std::ios::beg);
-    stream.read(reinterpret_cast<char*>(p_buffer), size);
+    stream.read(reinterpret_cast<wchar_t*>(p_buffer), size);
 
     return size;
 }

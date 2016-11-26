@@ -43,7 +43,7 @@ public:
     Bxml2Reader();
     /** Constructor. Loads data from the given file.
      *  \param[in]  p_filename  Name of the file to load. */
-    Bxml2Reader(const std::string& p_filename);
+    Bxml2Reader(const std::wstring& p_filename);
     /** Constructor. Assigns it the given data. Ownership of the data is not
      *  claimed, it still needs to be freed by the caller.
      *  \param[in]  p_data  Data to assign.
@@ -60,7 +60,7 @@ public:
     /** Attempts to load data from the given file.
      *  \param[in]  p_filename  Name of the file to load.
      *  \return bool    True if successful, false if not. */
-    bool load(const std::string& p_filename);
+    bool load(const std::wstring& p_filename);
     /** Attempts to load data from the given buffer.
      *  \param[in]  p_data  Data to load.
      *  \param[in]  p_size  Size of p_data.
@@ -72,7 +72,7 @@ public:
      *  \param[in]  p_document  Document to load into. */
     void populateXmlDocument(XmlDocument& p_document) const;
 private:
-    std::string readString(const byte*& position, const byte* strings) const;
+    std::wstring readString(const byte*& position, const byte* strings) const;
     void transformDocument(const std::list<XmlElement*>& p_elements) const;
 };
 

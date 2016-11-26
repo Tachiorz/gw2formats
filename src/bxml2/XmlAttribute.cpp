@@ -10,13 +10,13 @@
 namespace gw2f {
 namespace bxml2 {
 
-XmlAttribute::XmlAttribute(const std::string& p_name)
+XmlAttribute::XmlAttribute(const std::wstring& p_name)
     : m_parent(nullptr)
 {
     setName(p_name);
 }
 
-XmlAttribute::XmlAttribute(const std::string& p_name, const std::string& p_value)
+XmlAttribute::XmlAttribute(const std::wstring& p_name, const std::wstring& p_value)
     : m_parent(nullptr)
     , m_value(p_value)
 {
@@ -63,25 +63,25 @@ const XmlElement* XmlAttribute::parent() const
     return m_parent;
 }
 
-const std::string& XmlAttribute::name() const
+const std::wstring& XmlAttribute::name() const
 {
     return m_name;
 }
 
-const std::string& XmlAttribute::value() const
+const std::wstring& XmlAttribute::value() const
 {
     return m_value;
 }
 
-void XmlAttribute::setName(const std::string& p_name)
+void XmlAttribute::setName(const std::wstring& p_name)
 {
     m_name = p_name;
     // awesome trim
-    m_name.erase(std::remove_if(std::begin(m_name), std::end(m_name), std::isspace), std::end(m_name));
+    //m_name.erase(std::remove_if(std::begin(m_name), std::end(m_name), std::isspace), std::end(m_name));
     if (!m_name.length()) { throw std::invalid_argument("XmlElement needs a non-whitespace name."); }
 }
 
-void XmlAttribute::setValue(const std::string& p_value)
+void XmlAttribute::setValue(const std::wstring& p_value)
 {
     m_value = p_value;
 }

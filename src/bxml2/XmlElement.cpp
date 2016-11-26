@@ -11,7 +11,7 @@
 namespace gw2f {
 namespace bxml2 {
 
-XmlElement::XmlElement(const std::string& p_name)
+XmlElement::XmlElement(const std::wstring& p_name)
     : m_document(nullptr)
     , m_parent(nullptr)
     , m_firstChild(nullptr)
@@ -185,7 +185,7 @@ void XmlElement::removeAttribute(XmlAttribute* p_attribute)
     throw std::exception("This should never, ever happen. If it does, it means an XML attribute has its parent set to an object that does not contain it.");
 }
 
-void XmlElement::setAttribute(const std::string& p_name, const std::string& p_value)
+void XmlElement::setAttribute(const std::wstring& p_name, const std::wstring& p_value)
 {
     for (auto it = std::begin(m_attributes); it != std::end(m_attributes); it++) {
         if ((*it)->name() == p_name) {
@@ -196,7 +196,7 @@ void XmlElement::setAttribute(const std::string& p_name, const std::string& p_va
     addAttribute(new XmlAttribute(p_name, p_value));
 }
 
-XmlAttribute* XmlElement::attribute(const std::string& p_name)
+XmlAttribute* XmlElement::attribute(const std::wstring& p_name)
 {
     for (auto it = std::begin(m_attributes); it != std::end(m_attributes); it++) {
         if ((*it)->name() == p_name) {
@@ -206,7 +206,7 @@ XmlAttribute* XmlElement::attribute(const std::string& p_name)
     return nullptr;
 }
 
-const XmlAttribute* XmlElement::attribute(const std::string& p_name) const
+const XmlAttribute* XmlElement::attribute(const std::wstring& p_name) const
 {
     for (auto it = std::begin(m_attributes); it != std::end(m_attributes); it++) {
         if ((*it)->name() == p_name) {
@@ -282,28 +282,28 @@ const XmlElement* XmlElement::parent() const
     return m_parent;
 }
 
-const std::string& XmlElement::name() const
+const std::wstring& XmlElement::name() const
 {
     return m_name;
 }
 
-const std::string& XmlElement::value() const
+const std::wstring& XmlElement::value() const
 {
     return m_value;
 }
 
-void XmlElement::setName(const std::string& p_name) 
+void XmlElement::setName(const std::wstring& p_name) 
 {
     m_name = p_name;
     // awesome trim
-    m_name.erase(std::remove_if(std::begin(m_name), std::end(m_name), std::isspace), std::end(m_name));
+    //m_name.erase(std::remove_if(std::begin(m_name), std::end(m_name), std::isspace), std::end(m_name));
     if (!m_name.length()) { throw std::invalid_argument("XmlElement needs a non-whitespace name."); }
 }
 
-void XmlElement::setValue(const std::string& p_value)
+void XmlElement::setValue(const std::wstring& p_value)
 {
     m_value = p_value;
-    m_value.erase(std::remove_if(std::begin(m_value), std::end(m_value), std::isspace), std::end(m_value));
+    //m_value.erase(std::remove_if(std::begin(m_value), std::end(m_value), std::isspace), std::end(m_value));
 }
 
 }; // namespace bxml2

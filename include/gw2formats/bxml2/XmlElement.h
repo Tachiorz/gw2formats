@@ -46,12 +46,12 @@ class XmlElement
     XmlElement* m_nextSibling;
     uint32 m_numChildren;
     std::vector<XmlAttribute*> m_attributes;
-    std::string m_name;
-    std::string m_value;
+    std::wstring m_name;
+    std::wstring m_value;
 public:
     /** Constructors. Creates an element with the given name.
      *  \param[in]  p_name  Name of the element. */
-    XmlElement(const std::string& p_name);
+    XmlElement(const std::wstring& p_name);
     /** Copy constructor. */
     XmlElement(const XmlElement& p_other);
     /** Destructor. */
@@ -99,11 +99,11 @@ public:
      *  not exist, it is added.
      *  \param[in]  p_name  Name of the attribute.
      *  \param[in]  p_value Value of the attribute. */
-    void setAttribute(const std::string& p_name, const std::string& p_value);
+    void setAttribute(const std::wstring& p_name, const std::wstring& p_value);
     /** Gets the attribute with the given name, or nullptr if inexistant. */
-    XmlAttribute* attribute(const std::string& p_name);
+    XmlAttribute* attribute(const std::wstring& p_name);
     /** Gets the const attribute with the given name, or nullptr if inexistant. */
-    const XmlAttribute* attribute(const std::string& p_name) const;
+    const XmlAttribute* attribute(const std::wstring& p_name) const;
 
     /** Gets the first child element. */
     XmlElement* firstChild();
@@ -132,13 +132,13 @@ public:
     const XmlElement* parent() const;
 
     /** Gets the name of the element. */
-    const std::string& name() const;
+    const std::wstring& name() const;
     /** Gets the value of the element. */
-    const std::string& value() const;
+    const std::wstring& value() const;
     /** Sets the name of the element. */
-    void setName(const std::string& p_value);
+    void setName(const std::wstring& p_value);
     /** Sets the value of the element. */
-    void setValue(const std::string& p_value);
+    void setValue(const std::wstring& p_value);
 };
 
 }; // namespace bxml2

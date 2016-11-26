@@ -44,12 +44,12 @@ public:
      *  \param[in]  p_document  Document to write.
      *  \param[in]  p_stream    Stream to write to.
      *  \return bool    True if successful, false if not. */
-    bool write(const XmlDocument& p_document, std::ostream& p_stream);
+    bool write(const XmlDocument& p_document, std::wostream& p_stream);
     /** Writes a document to the given file.
      *  \param[in]  p_document  Document to write.
      *  \param[in]  p_filename  Name of the file to write to.
      *  \return bool    True if successful, false if not. */
-    bool write(const XmlDocument& p_document, const std::string& p_filename);
+    bool write(const XmlDocument& p_document, const std::wstring& p_filename);
     /** Writes a document to the given buffer, without null terminator.
      *  \param[in]  p_document  Document to write.
      *  \param[in]  p_buffer    Buffer to write to.
